@@ -1,0 +1,26 @@
+{
+  "tags": {
+    "allowUnknownTags": false,
+    "dictionaries": ["jsdoc", "closure"]
+  },
+  "source": {
+    "include": ["src"],
+    "includePattern": ".+\\.ts(doc|x)?$",
+    "excludePattern": "(^|\\/|\\\\)_"
+  },
+  "plugins": ["plugins/markdown", "better-docs/component", "better-docs/typescript"],
+  "recurseDepth": 10,
+  "templates": {
+    "better-docs": {
+      "name": "React Notes",
+      "description": "React Notes is a collection of notes and examples for React TypeScript.",
+      "version": "1.0.0"
+    }
+  },
+  "opts": {
+    "destination": "docs",
+    "template": "node_modules/better-docs",
+    "recurse": true,
+    "readme": "docs/README.md"
+  }
+}
