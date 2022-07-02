@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react'
 import { UserContext } from '@hooks/index'
 
 const Login = () => {
-  const { state, UserCreate } = useContext(UserContext)
+  const { state, UserLogin } = useContext(UserContext)
 
   const [inputVal, setInputs] = useState({
     username: '',
@@ -19,7 +19,7 @@ const Login = () => {
   }
 
   const onClickHandler = () => {
-    return UserCreate(inputVal)
+    return UserLogin(inputVal)
   }
 
   console.log(state)

@@ -60,9 +60,15 @@ const UserReducer = (
  * @returns {Function} UserCreate
  * */
 
-export const UserCreate = (dispatch: Dispatch<ActionType<string, string>>) => {
+export const UserLogin = (dispatch: Dispatch<ActionType<string, string>>) => {
   return ({ email, username }: { email: string; username: string }) => {
     dispatch({ type: 'login_user', payload: { email, username } })
+  }
+}
+
+export const UserLogout = (dispatch: Dispatch<ActionType<string, string>>) => {
+  return () => {
+    dispatch({ type: 'logout_user', payload: initialState })
   }
 }
 
@@ -71,12 +77,13 @@ export const UserCreate = (dispatch: Dispatch<ActionType<string, string>>) => {
  * @description This function is used to create a user context
  * @param {StateType} initialState
  * @param {UserReducer} reducer
- * @param {UserCreate} createUser
- * @returns {Context<StateType, UserReducer>} UserContext
+ * @function {UserLogin} LoginUser
+ * @function {UserLogout} LogoutUser
+ * @returns {Context<StateType, UserLogin, UserLogout>} UserContext
  **/
 
 export const { Context, Provider } = CtxFactory(
   UserReducer,
-  { UserCreate },
+  { UserLogin, UserLogout },
   initialState
 )
