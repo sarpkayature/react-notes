@@ -5,27 +5,24 @@ import CtxFactory from '../CtxFactory'
  * @name StateType
  * @description This is the state type for the UserContext
  * */
-type StateType = {
-  email: string
-  username: string
+type StateType<S> = {
+  email: S
+  username: S
 }
 
 /**
  * @name ActionType
  * @description This is the action type for the UserContext
  */
-type ActionType = {
-  type: string
+type ActionType<T, A> = {
+  type: T
   payload: {
-    email: string
-    username: string
+    email: A
+    username: A
   }
 }
 
-const initialState = {
-  email: 'slm',
-  username: 'smd',
-}
+const initialState: StateType<string> = { email: '', username: '' }
 
 /**
  *  @name UserReducer
@@ -35,17 +32,20 @@ const initialState = {
  *  @returns {StateType} state
  */
 
-const UserReducer = (state: StateType, action: ActionType) => {
-  const { type, payload } = action
+const UserReducer = (
+  state: StateType<string>,
+  action: ActionType<string, string>
+) => {
+  const {
+    type,
+    payload: { email, username },
+  } = action
   switch (type) {
-    case 'add_user':
-      return [
-        ...[state],
-        {
-          email: payload?.email,
-          username: payload?.username,
-        },
-      ]
+    case 'login_user':
+      return {
+        email,
+        username,
+      }
     default:
       return state
   }
@@ -58,9 +58,9 @@ const UserReducer = (state: StateType, action: ActionType) => {
  * @returns {Function} UserCreate
  * */
 
-const UserCreate = (dispatch: Dispatch<ActionType>) => {
-  return (email: string, username: string) => {
-    dispatch({ type: 'add_user', payload: { email, username } })
+export const UserCreate = (dispatch: Dispatch<ActionType<string, string>>) => {
+  return ({ email, username }: { email: string; username: string }) => {
+    dispatch({ type: 'login_user', payload: { email, username } })
   }
 }
 

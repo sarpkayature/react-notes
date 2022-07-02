@@ -1,12 +1,12 @@
 import React, { useContext } from 'react'
 import { ContextBundler } from '@utils/index'
-import Dummy from '@components/dummy'
+import { Login } from '@components/index'
 
 const App = () => {
   return (
     <ContextBundler>
       <div className='App'>
-        <Dummy />
+        <Login />
       </div>
     </ContextBundler>
   )
