@@ -46,6 +46,8 @@ const UserReducer = (
         email,
         username,
       }
+    case 'logout_user':
+      return initialState
     default:
       return state
   }
