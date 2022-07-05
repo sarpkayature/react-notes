@@ -8,7 +8,7 @@ import { UserContextProvider } from '@hooks/index'
  * @returns {React.ReactNode} - The wrapped component with the Context.
  * */
 
-const ContextBundler = ({ children }: { children?: React.ReactNode }) => {
+const ContextBundler = ({ children }: { children: React.ReactNode }) => {
   const providers = [UserContextProvider]
   return (
     <>
