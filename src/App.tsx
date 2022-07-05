@@ -1,15 +1,7 @@
-import React, { useContext } from 'react'
-import { ContextBundler } from '@utils/index'
-import { Login } from '@components/index'
+import { WithAppProviders } from '@utils/index'
 
 const App = () => {
-  return (
-    <ContextBundler>
-      <div className='App'>
-        <Login />
-      </div>
-    </ContextBundler>
-  )
+  return <WithAppProviders />
 }
 
 export default App
