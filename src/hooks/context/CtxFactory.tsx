@@ -1,13 +1,8 @@
-import {
-  createContext,
-  useReducer,
-  ReactNode,
-  Context as ContextType,
-  Dispatch,
-} from 'react'
+import { createContext, useReducer, ReactNode } from 'react'
 
 type ActionsType<S, P> = {
-  [key: string]: (state: S, payload: P) => S
+  // object with all the actions
+  [key in keyof P]: (state: S, payload?: P[key]) => S
 }
 
 type ReducerType<S, A> = {
@@ -18,10 +13,8 @@ type InitialStateType<S> = {
   [key: string]: S
 }
 
-type BoundActionsType<S, P> = {
-  [key: string]: (
-    dispatch: Dispatch<ActionsType<S, P> | any>
-  ) => (payload?: P) => void
+type BoundActionsType<T> = {
+  [key in keyof T]: (payload: T[key]) => void
 }
 
 /**
@@ -32,27 +25,21 @@ type BoundActionsType<S, P> = {
  * @param {InitialStateType} initialState - The initial state.
  * @returns {Object} - The context and provider.
  */
+
 const CtxFactory = (
   reducer: ReducerType<any, any>,
   actions: ActionsType<any, any>,
-  initialState?: InitialStateType<any>
-): {
-  Context: ContextType<{
-    state?: InitialStateType<any>
-    boundActions?: BoundActionsType<null, null>
-  }>
-  Provider: ({ children }: { children: ReactNode }) => JSX.Element
-} => {
-  const Context = createContext({})
+  initialState?: InitialStateType<{}>
+): object => {
+  const Context = createContext<{} | any>({})
 
   const Provider = ({ children }: { children: ReactNode }) => {
     const [state, dispatch] = useReducer(reducer, initialState)
 
-    const boundActions: BoundActionsType<null, null> = {}
+    const boundActions: BoundActionsType<typeof actions> = {}
 
-    for (let key in actions) {
+    for (let key in actions)
       boundActions[key] = actions[key](dispatch, undefined)
-    }
 
     return (
       <Context.Provider value={{ state, ...boundActions }}>
